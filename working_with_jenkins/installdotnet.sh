@@ -2,7 +2,7 @@
 
 # Update package list and install dependencies
 apt-get update && apt-get install -y --no-install-recommends \
-    curl libunwind8 gettext apt-transport-https
+    curl libunwind8 gettext apt-transport-https wget
 
 # Download the .NET install script
 wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh
