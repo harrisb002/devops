@@ -1,10 +1,22 @@
-apt-get update && apt-get install -y --no-install-recommends \
-    curl libunwind8 gettext apt-transport-https && \
-    curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
-    mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg && \
-    sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-debian-stretch-prod stretch main" > /etc/apt/sources.list.d/dotnetdev.list' && \
-    apt-get update
+#!/bin/bash
 
-apt-get install -y dotnet-sdk-6.0 && \
-    export PATH=$PATH:$HOME/dotnet && \
-    dotnet --version
+# Update Homebrew and install necessary dependencies
+brew update
+
+# Install required packages
+brew install curl gettext
+
+# Download the .NET install script
+wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh
+
+# Make the script executable
+chmod +x dotnet-install.sh
+
+# Run the install script for the latest .NET SDK version, targeting ARM64
+./dotnet-install.sh --install-dir $HOME/dotnet --arch arm64
+
+# Add .NET to the PATH environment variable
+export PATH=$PATH:$HOME/dotnet
+
+# Verify the installation
+dotnet --version
