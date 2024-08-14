@@ -1,20 +1,10 @@
-#!/bin/bash
-
-# Update package list and install dependencies
 apt-get update && apt-get install -y --no-install-recommends \
-    curl libunwind8 gettext apt-transport-https
+    curl libunwind8 gettext apt-transport-https && \
+    curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
+    mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg && \
+    sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-debian-stretch-prod stretch main" > /etc/apt/sources.list.d/dotnetdev.list' && \
+    apt-get update
 
-# Download the .NET install script
-wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh
-
-# Make the script executable
-chmod +x dotnet-install.sh
-
-# Install the .NET SDK for ARM64 architecture
-./dotnet-install.sh --channel 6.0 --install-dir /usr/share/dotnet --architecture arm64
-
-# Update the PATH environment variable
-export PATH=$PATH:/usr/share/dotnet
-
-# Verify the installation by checking the .NET version
-dotnet --version
+apt-get install -y dotnet-sdk-6.0 && \
+    export PATH=$PATH:$HOME/dotnet && \
+    dotnet --version
