@@ -1,0 +1,37 @@
+node('built-in'){
+	parameters {
+		password(name: "Password")
+	}
+	stage('Cleanup'){
+		cleanWs()
+	}
+	stage('Git'){
+		checkout scm
+	}
+	stage('Build'){
+		withCredentials([string(credentialsId: 'OurSecret', variable: 'OurSecret')]) {
+			echo "Use the password in a command: " + "${OurSecret}"
+		}
+		
+		try{
+			dotnetBuild project: env.WORKSPACE + '/working_with_jenkins/dotnet_code/ArlingtonThisWeek/ArlingtonThisWeek.sln', sdk: 'dotnet6'
+		} catch(Exception e){
+			echo e.toString()
+			archiveArtifacts artifacts: '**/*.*', followSymlinks: false
+			cleanWs()
+			throw e
+		}
+	}
+	stage("Test"){
+		dotnetTest project: '**/bin/**/net6.0/*.Tests.dll', sdk: 'dotnet6'
+	}
+	stage("Analysis"){
+		snykSecurity snykInstallation: 'MySnyk', snykTokenId: 'Snyk', targetFile: 'working_with_jenkins/dotnet_code/ArlingtonThisWeek/ArlingtonThisWeek.sln'
+	}
+	stage('Artifact'){
+		archiveArtifacts artifacts: '**/*.*', followSymlinks: false
+	}
+	stage('Cleanup'){
+		cleanWs()
+	}
+}
