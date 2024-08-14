@@ -1,0 +1,23 @@
+1. Remove pan from cabinet 
+2. Place pan on stove
+3. Place a pat of butter in the pan
+4. Set the burner heat to seven
+5. Open refigerator door
+6. Remove eggs from refigerator and set on counter
+...
+
+if (panIsInCabinet())
+	1. Remove pan from cabinet 
+elseif (panIsInWasher())
+	1. Remove pan from dishwasher
+if (stoveBurnerIsEmpty())
+	2. Place pan on stove
+else 
+	removeOtherPanFromStove()
+	2. Place pan on stove
+
+3. Place a pat of butter in the pan
+4. Set the burner heat to seven
+5. Open refigerator door
+6. Remove eggs from refigerator and set on counter
+...
