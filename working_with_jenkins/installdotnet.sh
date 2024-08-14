@@ -14,4 +14,8 @@ chmod +x dotnet-install.sh
 ./dotnet-install.sh --channel 6.0 --install-dir /usr/share/dotnet --architecture arm64
 
 # Update the PATH environment variable
-export PATH=$PATH:/usr/share/dotnet && dotnet --version
+echo 'export PATH=$PATH:/usr/share/dotnet' >> ~/.bashrc
+. ~/.bashrc
+
+# Verify the installation by checking the .NET version
+dotnet --version
