@@ -1,0 +1,4 @@
+# For Ubuntu - MySql
+
+cp //shared/application1/ubuntu/installfiles /usr/bin/app1
+myex /user/bin/app1/install
