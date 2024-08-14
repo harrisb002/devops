@@ -1,22 +1,20 @@
 #!/bin/bash
 
-# Update and install required packages
+# Update package list and install dependencies
 apt-get update && apt-get install -y --no-install-recommends \
-    wget curl libunwind8 gettext apt-transport-https && \
-    curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
-    mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
+    curl libunwind8 gettext apt-transport-https
 
 # Download the .NET install script
 wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh
 
-# Run the .NET install script for ARM64 and .NET 6.0
-bash dotnet-install.sh --channel 6.0 --arch arm64
+# Make the script executable
+chmod +x dotnet-install.sh
 
-# Add dotnet to the PATH for the current session
-export PATH=$PATH:$HOME/dotnet
+# Install the .NET SDK for ARM64 architecture
+./dotnet-install.sh --channel 6.0 --install-dir /usr/share/dotnet --architecture arm64
 
-# Print the PATH to verify it's set correctly
-echo $PATH
+# Update the PATH environment variable
+export PATH=$PATH:/usr/share/dotnet
 
-# Verify the installation
+# Verify the installation by checking the .NET version
 dotnet --version
