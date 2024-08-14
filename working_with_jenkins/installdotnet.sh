@@ -13,16 +13,10 @@ wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh
 bash dotnet-install.sh --channel 6.0 --arch arm64
 
 # Add dotnet to the PATH for the current session
-export PATH=$PATH:$HOME/.dotnet
+export PATH=$PATH:$HOME/dotnet
 
-# Verify the installation in the current session
-dotnet --version
+# Print the PATH to verify it's set correctly
+echo $PATH
 
-# Permanently add dotnet to the PATH for future sessions
-echo 'export PATH=$PATH:$HOME/.dotnet' >> ~/.bashrc
-
-# Source the profile file to update the PATH in the current session
-bash -c "source ~/.bashrc"
-
-# Verify the installation again
+# Verify the installation
 dotnet --version
