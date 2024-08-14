@@ -1,10 +1,8 @@
 #!/bin/bash
 
-# Update Homebrew and install necessary dependencies
-brew update
-
-# Install required packages
-brew install curl gettext
+# Update package list and install dependencies
+apt-get update && apt-get install -y --no-install-recommends \
+    curl libunwind8 gettext apt-transport-https
 
 # Download the .NET install script
 wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh
@@ -12,11 +10,11 @@ wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh
 # Make the script executable
 chmod +x dotnet-install.sh
 
-# Run the install script for the latest .NET SDK version, targeting ARM64
-./dotnet-install.sh --install-dir $HOME/dotnet --arch arm64
+# Install the .NET SDK for ARM64 architecture
+./dotnet-install.sh --channel 6.0 --install-dir /usr/share/dotnet --architecture arm64
 
-# Add .NET to the PATH environment variable
-export PATH=$PATH:$HOME/dotnet
+# Update the PATH environment variable
+export PATH=$PATH:/usr/share/dotnet
 
-# Verify the installation
+# Verify the installation by checking the .NET version
 dotnet --version
